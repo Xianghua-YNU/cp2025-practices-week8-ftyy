@@ -1,82 +1,63 @@
 import numpy as np
 
 def standard_formula(a, b, c):
-    """使用标准公式求解二次方程 ax^2 + bx + c = 0
+    """使用标准公式求解二次方程 ax^2 + bx + c = 0"""
+    if a == 0:
+        # 处理线性方程或无效输入
+        if b == 0:
+            return None  # 无解
+        return (-c / b, )  # 线性方程的唯一解
     
-    参数:
-        a (float): 二次项系数
-        b (float): 一次项系数
-        c (float): 常数项
-    
-    返回:
-        tuple: 方程的两个根 (x1, x2) 或 None(无实根)
-    """
     discriminant = b**2 - 4*a*c
     if discriminant < 0:
-        return None
-    sqrt_discriminant = np.sqrt(discriminant)
-    x1 = (-b + sqrt_discriminant) / (2*a)
-    x2 = (-b - sqrt_discriminant) / (2*a)
-    return (x1, x2)
+        return None  # 无实根
+    
+    sqrt_d = np.sqrt(discriminant)
+    x1 = (-b + sqrt_d) / (2 * a)
+    x2 = (-b - sqrt_d) / (2 * a)
+    return x1, x2
 
 def alternative_formula(a, b, c):
-    """使用替代公式求解二次方程 ax^2 + bx + c = 0
-    该方法通过将标准公式的分子和分母都乘以 -b∓√(b^2-4ac) 得到
+    """使用替代公式求解二次方程 ax^2 + bx + c = 0"""
+    if a == 0:
+        # 处理线性方程或无效输入
+        if b == 0:
+            return None  # 无解
+        return (-c / b, )  # 线性方程的唯一解
     
-    参数:
-        a (float): 二次项系数
-        b (float): 一次项系数
-        c (float): 常数项
-    
-    返回:
-        tuple: 方程的两个根 (x1, x2) 或 None(无实根)
-    """
     discriminant = b**2 - 4*a*c
     if discriminant < 0:
-        return None
-    sqrt_discriminant = np.sqrt(discriminant)
+        return None  # 无实根
     
-    # 根据b的符号选择不同的计算方式以避免抵消
+    sqrt_d = np.sqrt(discriminant)
     if b > 0:
-        x1 = (2*c) / (-b - sqrt_discriminant)
-        x2 = (-b - sqrt_discriminant) / (2*a)
+        x1 = (-2 * c) / (b + sqrt_d)
+        x2 = (-b - sqrt_d) / (2 * a)
     else:
-        x1 = (-b + sqrt_discriminant) / (2*a)
-        x2 = (2*c) / (-b + sqrt_discriminant)
-    return (x1, x2)
+        x1 = (-b + sqrt_d) / (2 * a)
+        x2 = (-2 * c) / (b - sqrt_d)
+    return x1, x2
 
 def stable_formula(a, b, c):
-    """稳定的二次方程求根程序，能够处理各种特殊情况和数值稳定性问题
+    """稳定的二次方程求根程序"""
+    if a == 0:
+        # 处理线性方程或无效输入
+        if b == 0:
+            return None  # 无解
+        return (-c / b, )  # 线性方程的唯一解
     
-    参数:
-        a (float): 二次项系数
-        b (float): 一次项系数
-        c (float): 常数项
-    
-    返回:
-        tuple: 方程的两个根 (x1, x2) 或 None(无实根)
-    """
     discriminant = b**2 - 4*a*c
     if discriminant < 0:
-        return None
+        return None  # 无实根
     
-    # 处理a=0的情况（线性方程）
-    if a == 0:
-        if b == 0:
-            return None
-        return (-c/b, None)
-    
-    sqrt_discriminant = np.sqrt(discriminant)
-    
-    # 根据b的符号选择计算方式以避免抵消
-    if b > 0:
-        x1 = (2*c) / (-b - sqrt_discriminant)
-        x2 = (-b - sqrt_discriminant) / (2*a)
+    sqrt_d = np.sqrt(discriminant)
+    if b >= 0:
+        x1 = (-b - sqrt_d) / (2 * a)
+        x2 = (2 * c) / (-b - sqrt_d)
     else:
-        x1 = (-b + sqrt_discriminant) / (2*a)
-        x2 = (2*c) / (-b + sqrt_discriminant)
-    
-    return (x1, x2)
+        x1 = (-b + sqrt_d) / (2 * a)
+        x2 = (2 * c) / (-b + sqrt_d)
+    return x1, x2
 
 def main():
     test_cases = [
